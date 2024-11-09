@@ -43,7 +43,7 @@ def main():
                 print('Введите название файла')
                 name = input()
 
-                if os.path.exists('matrixes/' + name):
+                if os.path.exists('matrixes/' + name + '.txt'):
                     res = read_from_file(name)
 
                     matrix = res[0].copy()
@@ -61,7 +61,7 @@ def main():
                     if os.path.exists('matrixes/' + name):
                         print('Файл с таким именем существует')
                     else:
-                        write_in_file(name, matrix, power)
+                        write_in_file(name, matrix)
 
                 else:
                     print('Матрица не выбрана')

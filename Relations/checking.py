@@ -16,6 +16,8 @@ def check_all (matrix, power):
 
     symmetry = True
     antisymmetry = True
+    anti_found = False
+    asymmetry = True
     res_symmetry = 0
 
     reflexivity = True
@@ -27,9 +29,14 @@ def check_all (matrix, power):
 
     for i in range(power):
         for j in range(power):
-            if symmetry or antisymmetry:
-                if matrix[i][j] == 1:
+            if symmetry or antisymmetry or asymmetry:
+                if i == j:
+                    if matrix[i][i] == 1:
+                        anti_found = True
+
+                if matrix[i][j] == 1 and i != j:
                     if matrix[j][i] == 1:
+                        asymmetry = False
                         antisymmetry = False
                     else:
                         symmetry = False
@@ -45,13 +52,15 @@ def check_all (matrix, power):
                     transitivity = False
 
             if fullness:
-                if matrix[i][j] == 0 and matrix[j][i] == 0:
+                if matrix[i][j] == 0 and matrix[j][i] == 0 and i != j:
                     fullness = False
 
     if symmetry:
         res_symmetry = 1
-    if antisymmetry:
+    if asymmetry:
         res_symmetry = -1
+    if antisymmetry and anti_found:
+        res_symmetry = 2
 
     if reflexivity:
         res_reflexivity = 1

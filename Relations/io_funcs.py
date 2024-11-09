@@ -16,44 +16,33 @@ def create_matrix(content, power):
     return matrix
 
 def read_from_file(name):
-    f = open('matrixes/' + name)
-    content = f.read()
-    f.close()
+    matrix = []
 
-    content = content.split("\n")
+    with open('matrixes/' + name + '.txt') as f:
+        for line in f:
+            arr = list(map(int, line.split()))
+            matrix.append(arr)
 
-    power = int(content[0])
-
-    matrix = [[] for _ in range(power)]
-    pos = 1
-
-    for i in range(power):
-        for j in range(power):
-            matrix[i].append(int(content[pos]))
-            pos += 1
-
+    power = len(matrix)
     return matrix, power
 
-def write_in_file(name, matrix, power):
-    f = open('matrixes/' + name, 'w')
+def write_in_file(name, matrix):
+    with open('matrixes/' + name + '.txt', 'w') as f:
+        for line in matrix:
+            f.write(" ".join(map(str, line)) + '\n')
 
-    f.write(str(power) + '\n')
-
-    for i in range(power):
-        for j in range(power):
-            f.write(str(matrix[i][j]) + '\n')
-
-    f.close()
 
 def show_result(res):
 
     match res[0]:
+        case 2:
+            print('Отношение антисимметричное')
         case 1:
             print('Отношение симметричное')
         case -1:
-            print('Отношение антисимметричное')
-        case 0:
             print('Отношение асимметричное')
+        case 0:
+            print('Отношение не обладает симметрией')
 
     match res[1]:
         case 1:
